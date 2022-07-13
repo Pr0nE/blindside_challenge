@@ -1,4 +1,4 @@
-
+import 'package:blindside_challenge/helpers/controller_initializer_mixin.dart';
 import 'package:blindside_challenge/helpers/fade_page_route.dart';
 import 'package:blindside_challenge/model/video_info_model.dart';
 import 'package:blindside_challenge/widgets/video_item_widget.dart';
@@ -21,12 +21,13 @@ class VideoListWidget extends StatefulWidget {
   State<VideoListWidget> createState() => _VideoListWidgetState();
 }
 
-class _VideoListWidgetState extends State<VideoListWidget> {
+class _VideoListWidgetState extends State<VideoListWidget>
+    with ControllerInitializerMixin {
   late final List<Future<VideoPlayerController>> controllers;
 
   @override
   void initState() {
-    controllers = _buildControllers(widget.information);
+    controllers = buildControllers(widget.information);
 
     startTrackControllersInitialization(controllers);
 
@@ -57,34 +58,8 @@ class _VideoListWidgetState extends State<VideoListWidget> {
             SizedBox(height: 50),
       );
 
-  List<Future<VideoPlayerController>> _buildControllers(
-    List<VideoInfo> information,
-  ) {
-    // TODO: Here we are initalizing whole videos controller at once, which may cost much if videos count is big. Instead we should only initialize visible videos.
-    return information.map((info) async {
-      final controller = VideoPlayerController.asset(getVideoUrlFor(info.id),
-          videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true));
-
-      await _initializeController(controller);
-
-      return controller;
-    }).toList();
-  }
-
   Future<void> startTrackControllersInitialization(
     List<Future<VideoPlayerController>> controllers,
   ) async =>
       widget.onLoaded(await Future.wait(controllers));
-
-  Future<void> _initializeController(VideoPlayerController controller) async {
-    controller.setLooping(true);
-    controller.setVolume(0);
-    await controller.initialize();
-
-    controller.play();
-  }
-
-  String getVideoUrlFor(String id) => 'assets/videos/$id.mp4';
 }
-
-

@@ -1,15 +1,37 @@
-import 'dart:ui';
-
 import 'package:blindside_challenge/model/video_info_model.dart';
+import 'package:blindside_challenge/widgets/comments_widget.dart';
 import 'package:blindside_challenge/widgets/video_list_widget.dart';
-import 'package:blindside_challenge/pages/video_page.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:video_player/video_player.dart';
+
+List<VideoInfo> videos = [
+  VideoInfo(id: '1', title: 'Was ist Blindside?'),
+  VideoInfo(
+    id: '2',
+    title: 'Teaser NIKE in Tenerife',
+  ),
+  VideoInfo(id: '3', title: 'Never Settle, Never Done | Nike'),
+  VideoInfo(id: '4', title: 'No Excuses || Nike || Spec Commercial'),
+];
+
+List<CommentModel> comments = [
+  CommentModel(
+      author: 'David',
+      message: 'Cool stuff!',
+      videoId: '1'),
+  CommentModel(
+      author: 'James',
+      message: 'Love it, keep it up.',
+      videoId: '2'),
+  CommentModel(
+      author: 'Elena',
+      message: 'Nice, i hope it would get even better in the future.',
+      videoId: '3'),
+  CommentModel(
+      author: 'Jia',
+      message: 'These guys are rocking it!',
+      videoId: '3'),
+];
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -19,20 +41,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<VideoInfo> videos = [
-    VideoInfo(id: '1', title: 'Was ist Blindside?'),
-    VideoInfo(
-      id: '2',
-      title: 'Teaser NIKE in Tenerife',
-    )
-    // VideoInfo(id: '3', title: 'Video 3'),
-    // VideoInfo(id: '4', title: 'Video 4'),
-    // VideoInfo(id: '5', title: 'Video 5'),
-  ];
-
   @override
   Widget build(BuildContext context) => Scaffold(
-        //backgroundColor: Colors.black12,
+        backgroundColor: Color(0xff222831),
         body: Column(
           children: [
             const SizedBox(
