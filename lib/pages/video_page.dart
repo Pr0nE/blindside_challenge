@@ -1,4 +1,6 @@
-import 'package:blindside_challenge/home_page.dart';
+import 'package:blindside_challenge/pages/home_page.dart';
+import 'package:blindside_challenge/model/video_info_model.dart';
+import 'package:blindside_challenge/widgets/video_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
