@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "38630223438",
+    "project_id": "blindside-challenge-6d2c0",
+    "storage_bucket": "blindside-challenge-6d2c0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:38630223438:android:906da9347450b037b9dd1f",
+        "android_client_info": {
+          "package_name": "com.example.blindside_challenge"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "38630223438-fve7i1lqfq6mmr4s0q3i6hdrt69fr3r7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_ijoN3WSgaXS4M4DhyY8OCxJFBbxXZhY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "38630223438-fve7i1lqfq6mmr4s0q3i6hdrt69fr3r7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "38630223438-o3hbu9ilmo0fsauemvchcv8fj117dng2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.blindsideChallenge"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

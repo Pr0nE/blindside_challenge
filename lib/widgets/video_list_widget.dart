@@ -10,19 +10,19 @@ class VideoListWidget extends StatefulWidget {
   const VideoListWidget({
     Key? key,
     required this.information,
-    required this.onLoaded,
+    this.onLoaded,
   }) : super(key: key);
 
   final List<VideoInfo> information;
 
-  final void Function(List<VideoPlayerController>) onLoaded;
+  final void Function(List<VideoPlayerController>)? onLoaded;
 
   @override
   State<VideoListWidget> createState() => _VideoListWidgetState();
 }
 
 class _VideoListWidgetState extends State<VideoListWidget>
-    with ControllerInitializerMixin {
+    with VideoControllerMixin {
   late final List<Future<VideoPlayerController>> controllers;
 
   @override
@@ -61,5 +61,5 @@ class _VideoListWidgetState extends State<VideoListWidget>
   Future<void> startTrackControllersInitialization(
     List<Future<VideoPlayerController>> controllers,
   ) async =>
-      widget.onLoaded(await Future.wait(controllers));
+      widget.onLoaded?.call(await Future.wait(controllers));
 }

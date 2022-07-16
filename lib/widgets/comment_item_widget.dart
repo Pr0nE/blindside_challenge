@@ -9,10 +9,17 @@ class CommentItemWidget extends StatelessWidget {
   Widget build(BuildContext context) => Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('${comment.author}: ',style: TextStyle(fontWeight: FontWeight.bold),),
-            Align(
-                alignment: Alignment.centerLeft, child: Text(comment.message)),
+            Text(
+              '${comment.author}: ',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Flexible(
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(comment.message)),
+            ),
           ],
         ),
       );

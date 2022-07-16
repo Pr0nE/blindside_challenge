@@ -2,7 +2,7 @@ import 'package:blindside_challenge/model/video_info_model.dart';
 import 'package:video_player/video_player.dart';
 import 'package:collection/collection.dart';
 
-mixin ControllerInitializerMixin {
+mixin VideoControllerMixin {
   static final Map<String, Future<VideoPlayerController>> _controllers = {};
   static final Map<String, VideoPlayerController> _loadedControllers = {};
 
@@ -29,6 +29,13 @@ mixin ControllerInitializerMixin {
     }
 
     return result;
+  }
+
+void muteVideo(VideoInfo video) {
+    _loadedControllers.entries
+        .firstWhereOrNull((entity) => entity.key == video.id)
+        ?.value
+        .setVolume(0);
   }
 
   VideoPlayerController? getControllerFor(VideoInfo info) =>

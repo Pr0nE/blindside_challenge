@@ -47,9 +47,10 @@ class _VideoItemWidgetState extends State<VideoItemWidget> {
                       child: Text(
                         widget.info.title,
                         style: TextStyle(
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xffEEEEEE)),
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xffEEEEEE),
+                        ),
                       ),
                     ),
                   ClipRRect(

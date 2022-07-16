@@ -3,25 +3,24 @@ import 'package:blindside_challenge/helpers/fade_page_route.dart';
 import 'package:blindside_challenge/model/video_info_model.dart';
 import 'package:blindside_challenge/pages/video_page.dart';
 import 'package:blindside_challenge/widgets/video_item_widget.dart';
-import 'package:blindside_challenge/widgets/video_list_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:video_player/video_player.dart';
 
 class RelatedVideosWidget extends StatefulWidget {
-  const RelatedVideosWidget({Key? key, required this.videosInfo})
+  const RelatedVideosWidget(
+      {Key? key, required this.videosInfo, required this.parentVideo})
       : super(key: key);
 
   final List<VideoInfo> videosInfo;
+  final VideoInfo parentVideo;
 
   @override
   State<RelatedVideosWidget> createState() => _RelatedVideosWidgetState();
 }
 
 class _RelatedVideosWidgetState extends State<RelatedVideosWidget>
-    with ControllerInitializerMixin {
+    with VideoControllerMixin {
   late final List<Future<VideoPlayerController>> controllers;
 
   @override
@@ -68,6 +67,7 @@ class _RelatedVideosWidgetState extends State<RelatedVideosWidget>
                                   showTitle: false,
                                   onTap: (VideoPlayerController controller) {
                                     controller.setVolume(1);
+                                    muteVideo(widget.parentVideo);
 
                                     Navigator.push(
                                         context,
@@ -75,6 +75,8 @@ class _RelatedVideosWidgetState extends State<RelatedVideosWidget>
                                           (BuildContext context) => VideoPage(
                                             controller: controller,
                                             info: widget.videosInfo[itemIndex],
+                                            previousVideoInfo:
+                                                widget.parentVideo,
                                           ),
                                         ));
                                     return;
