@@ -13,7 +13,7 @@ class CommentItemWidget extends StatelessWidget {
           children: [
             Text(
               '${comment.author}: ',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             Flexible(
               child: Align(

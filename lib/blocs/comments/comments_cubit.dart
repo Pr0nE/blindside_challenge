@@ -1,4 +1,4 @@
-import 'package:blindside_challenge/blocs/comments/commnets_state.dart';
+import 'package:blindside_challenge/blocs/comments/comments_state.dart';
 import 'package:blindside_challenge/model/video_model.dart';
 import 'package:blindside_challenge/repositories/comments_repository.dart';
 import 'package:blindside_challenge/widgets/comments_widget.dart';

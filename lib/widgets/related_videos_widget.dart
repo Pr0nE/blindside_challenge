@@ -8,9 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class RelatedVideosWidget extends StatefulWidget {
-  const RelatedVideosWidget(
-      {Key? key, required this.videosInfo, required this.parentVideo})
-      : super(key: key);
+  const RelatedVideosWidget({
+    Key? key,
+    required this.videosInfo,
+    required this.parentVideo,
+  }) : super(key: key);
 
   final List<VideoModel> videosInfo;
   final VideoModel parentVideo;
@@ -35,7 +37,7 @@ class _RelatedVideosWidgetState extends State<RelatedVideosWidget>
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            Align(
+            const Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 'Related Videos',
@@ -55,32 +57,20 @@ class _RelatedVideosWidgetState extends State<RelatedVideosWidget>
                         padding: const EdgeInsets.all(8.0),
                         child: FutureBuilder<VideoPlayerController>(
                           future: controllers[itemIndex],
-                          builder: (BuildContext context,
-                                  AsyncSnapshot<VideoPlayerController>
-                                      snapshot) =>
+                          builder: (
+                            BuildContext context,
+                            AsyncSnapshot<VideoPlayerController> snapshot,
+                          ) =>
                               VideoItemWidget(
-                                  info: widget.videosInfo[itemIndex],
-                                  controllerFuture: controllers[itemIndex],
-                                  controller: getControllerFor(
-                                      widget.videosInfo[itemIndex]),
-                                  isExpanded: false,
-                                  showTitle: false,
-                                  onTap: (VideoPlayerController controller) {
-                                    controller.setVolume(1);
-                                    muteVideo(widget.parentVideo);
-
-                                    Navigator.push(
-                                        context,
-                                        FadePageRoute(
-                                          (BuildContext context) => VideoPage(
-                                            controller: controller,
-                                            info: widget.videosInfo[itemIndex],
-                                            previousVideoInfo:
-                                                widget.parentVideo,
-                                          ),
-                                        ));
-                                    return;
-                                  }),
+                            info: widget.videosInfo[itemIndex],
+                            controllerFuture: controllers[itemIndex],
+                            controller:
+                                getControllerFor(widget.videosInfo[itemIndex]),
+                            isExpanded: false,
+                            showTitle: false,
+                            onTap: (controller) => _onTapRelatedVideo(
+                                controller: controller, itemIndex: itemIndex),
+                          ),
                         ),
                       ),
                     ),
@@ -91,4 +81,24 @@ class _RelatedVideosWidgetState extends State<RelatedVideosWidget>
           ],
         ),
       );
+
+  void _onTapRelatedVideo({
+    required VideoPlayerController controller,
+    required int itemIndex,
+  }) {
+    controller.setVolume(1);
+    muteVideo(widget.parentVideo);
+
+    Navigator.push(
+      context,
+      FadePageRoute(
+        (BuildContext context) => VideoPage(
+          controller: controller,
+          info: widget.videosInfo[itemIndex],
+          previousVideoInfo: widget.parentVideo,
+        ),
+      ),
+    );
+    return;
+  }
 }

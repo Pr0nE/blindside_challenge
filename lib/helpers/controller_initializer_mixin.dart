@@ -31,13 +31,6 @@ mixin VideoControllerMixin {
     return result;
   }
 
-  void muteVideo(VideoModel video) {
-    _loadedControllers.entries
-        .firstWhereOrNull((entity) => entity.key == video.id)
-        ?.value
-        .setVolume(0);
-  }
-
   VideoPlayerController? getControllerFor(VideoModel info) =>
       _loadedControllers.entries
           .firstWhereOrNull((element) => element.key == info.id)
@@ -50,6 +43,22 @@ mixin VideoControllerMixin {
     await _initializeController(controller);
 
     return controller;
+  }
+
+  void muteVideo(VideoModel video) {
+    _loadedControllers.entries
+        .firstWhereOrNull((entity) => entity.key == video.id)
+        ?.value
+        .setVolume(0);
+  }
+
+  disposeAllControllers() {
+    _loadedControllers.entries.map((e) => e.value).forEach(
+          (element) => element.dispose(),
+        );
+
+    _controllers.clear();
+    _loadedControllers.clear();
   }
 
   Future<void> _initializeController(VideoPlayerController controller) async {

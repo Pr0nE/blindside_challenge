@@ -29,9 +29,9 @@ class VideoItemWidget extends StatefulWidget {
 class _VideoItemWidgetState extends State<VideoItemWidget> {
   @override
   Widget build(BuildContext context) => FutureBuilder<VideoPlayerController>(
-      future: widget.controllerFuture,
-      builder: (context, snapData) {
-        return Hero(
+        future: widget.controllerFuture,
+        builder: (context, snapData) {
+          return Hero(
             tag: widget.info.id,
             child: Material(
               type: MaterialType.transparency,
@@ -43,19 +43,22 @@ class _VideoItemWidgetState extends State<VideoItemWidget> {
                   if (widget.showTitle)
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 8),
+                        horizontal: 8,
+                        vertical: 8,
+                      ),
                       child: Text(
                         widget.info.title,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xffEEEEEE),
+                          color: Colors.white,
                         ),
                       ),
                     ),
                   ClipRRect(
                     borderRadius: BorderRadius.all(
-                        Radius.circular(widget.isExpanded ? 0 : 8)),
+                      Radius.circular(widget.isExpanded ? 0 : 8),
+                    ),
                     child: GestureDetector(
                       onTap: () {
                         if (snapData.hasData) {
@@ -63,23 +66,26 @@ class _VideoItemWidgetState extends State<VideoItemWidget> {
                         }
                       },
                       child: AspectRatio(
-                          aspectRatio: 16 / 9,
-                          child: widget.controller != null
-                              ? VideoPlayer(widget.controller!)
-                              : snapData.hasData
-                                  ? VideoPlayer(snapData.data!)
-                                  : Shimmer.fromColors(
-                                      baseColor: Colors.grey[300]!,
-                                      highlightColor: Colors.grey[100]!,
-                                      child: Container(
-                                        width: double.infinity,
-                                        color: Colors.black,
-                                      ),
-                                    )),
+                        aspectRatio: 16 / 9,
+                        child: widget.controller != null
+                            ? VideoPlayer(widget.controller!)
+                            : snapData.hasData
+                                ? VideoPlayer(snapData.data!)
+                                : Shimmer.fromColors(
+                                    baseColor: Colors.grey[300]!,
+                                    highlightColor: Colors.grey[100]!,
+                                    child: Container(
+                                      width: double.infinity,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                      ),
                     ),
                   ),
                 ],
               ),
-            ));
-      });
+            ),
+          );
+        },
+      );
 }

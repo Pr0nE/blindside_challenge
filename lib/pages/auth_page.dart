@@ -1,8 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+
 import 'package:blindside_challenge/helpers/fade_page_route.dart';
 import 'package:blindside_challenge/pages/home_page.dart';
 import 'package:blindside_challenge/theme/colors.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:blindside_challenge/extensions/context_extensions.dart';
 
 enum AuthType {

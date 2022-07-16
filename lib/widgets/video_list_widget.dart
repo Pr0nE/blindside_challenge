@@ -38,25 +38,34 @@ class _VideoListWidgetState extends State<VideoListWidget>
   Widget build(BuildContext context) => ListView.separated(
         itemCount: widget.information.length,
         itemBuilder: (BuildContext context, int itemIndex) => VideoItemWidget(
-            info: widget.information[itemIndex],
-            controllerFuture: controllers[itemIndex],
-            isExpanded: false,
-            onTap: (VideoPlayerController controller) {
-              controller.setVolume(1);
-
-              Navigator.push(
-                  context,
-                  FadePageRoute(
-                    (BuildContext context) => VideoPage(
-                      controller: controller,
-                      info: widget.information[itemIndex],
-                    ),
-                  ));
-              return;
-            }),
+          info: widget.information[itemIndex],
+          controllerFuture: controllers[itemIndex],
+          isExpanded: false,
+          onTap: (controller) => _onTapVideo(
+            controller: controller,
+            itemIndex: itemIndex,
+          ),
+        ),
         separatorBuilder: (BuildContext context, int itemIndex) =>
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
       );
+
+  void _onTapVideo({
+    required VideoPlayerController controller,
+    required int itemIndex,
+  }) {
+    controller.setVolume(1);
+
+    Navigator.push(
+        context,
+        FadePageRoute(
+          (BuildContext context) => VideoPage(
+            controller: controller,
+            info: widget.information[itemIndex],
+          ),
+        ));
+    return;
+  }
 
   Future<void> startTrackControllersInitialization(
     List<Future<VideoPlayerController>> controllers,
