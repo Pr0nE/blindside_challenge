@@ -1,6 +1,6 @@
 import 'package:blindside_challenge/helpers/controller_initializer_mixin.dart';
 import 'package:blindside_challenge/helpers/fade_page_route.dart';
-import 'package:blindside_challenge/model/video_info_model.dart';
+import 'package:blindside_challenge/model/video_model.dart';
 import 'package:blindside_challenge/widgets/video_item_widget.dart';
 import 'package:blindside_challenge/pages/video_page.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,7 @@ class VideoListWidget extends StatefulWidget {
     this.onLoaded,
   }) : super(key: key);
 
-  final List<VideoInfo> information;
+  final List<VideoModel> information;
 
   final void Function(List<VideoPlayerController>)? onLoaded;
 

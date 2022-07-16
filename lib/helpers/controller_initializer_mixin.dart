@@ -1,4 +1,4 @@
-import 'package:blindside_challenge/model/video_info_model.dart';
+import 'package:blindside_challenge/model/video_model.dart';
 import 'package:video_player/video_player.dart';
 import 'package:collection/collection.dart';
 
@@ -7,11 +7,11 @@ mixin VideoControllerMixin {
   static final Map<String, VideoPlayerController> _loadedControllers = {};
 
   List<Future<VideoPlayerController>> buildControllers(
-    List<VideoInfo> information,
+    List<VideoModel> information,
   ) {
     List<Future<VideoPlayerController>> result = [];
 
-    for (VideoInfo videoInfo in information) {
+    for (VideoModel videoInfo in information) {
       if (_controllers.containsKey(videoInfo.id)) {
         // Video cached
         result.add(_controllers[videoInfo.id]!);
@@ -31,19 +31,19 @@ mixin VideoControllerMixin {
     return result;
   }
 
-void muteVideo(VideoInfo video) {
+  void muteVideo(VideoModel video) {
     _loadedControllers.entries
         .firstWhereOrNull((entity) => entity.key == video.id)
         ?.value
         .setVolume(0);
   }
 
-  VideoPlayerController? getControllerFor(VideoInfo info) =>
+  VideoPlayerController? getControllerFor(VideoModel info) =>
       _loadedControllers.entries
           .firstWhereOrNull((element) => element.key == info.id)
           ?.value;
 
-  Future<VideoPlayerController> _initControllerFor(VideoInfo info) async {
+  Future<VideoPlayerController> _initControllerFor(VideoModel info) async {
     final controller = VideoPlayerController.asset(_getVideoUrlFor(info.id),
         videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true));
 

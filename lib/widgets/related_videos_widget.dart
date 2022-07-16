@@ -1,6 +1,6 @@
 import 'package:blindside_challenge/helpers/controller_initializer_mixin.dart';
 import 'package:blindside_challenge/helpers/fade_page_route.dart';
-import 'package:blindside_challenge/model/video_info_model.dart';
+import 'package:blindside_challenge/model/video_model.dart';
 import 'package:blindside_challenge/pages/video_page.dart';
 import 'package:blindside_challenge/widgets/video_item_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,8 +12,8 @@ class RelatedVideosWidget extends StatefulWidget {
       {Key? key, required this.videosInfo, required this.parentVideo})
       : super(key: key);
 
-  final List<VideoInfo> videosInfo;
-  final VideoInfo parentVideo;
+  final List<VideoModel> videosInfo;
+  final VideoModel parentVideo;
 
   @override
   State<RelatedVideosWidget> createState() => _RelatedVideosWidgetState();

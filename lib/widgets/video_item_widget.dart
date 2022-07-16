@@ -1,4 +1,4 @@
-import 'package:blindside_challenge/model/video_info_model.dart';
+import 'package:blindside_challenge/model/video_model.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:video_player/video_player.dart';
@@ -14,7 +14,7 @@ class VideoItemWidget extends StatefulWidget {
     this.controller,
   }) : super(key: key);
 
-  final VideoInfo info;
+  final VideoModel info;
   final bool isExpanded;
   final Future<VideoPlayerController> controllerFuture;
   final bool showTitle;

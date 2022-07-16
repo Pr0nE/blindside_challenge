@@ -1,31 +1,14 @@
-import 'package:blindside_challenge/model/video_info_model.dart';
+import 'package:blindside_challenge/blocs/videos/videos_cubit.dart';
+import 'package:blindside_challenge/blocs/videos/videos_state.dart';
+import 'package:blindside_challenge/extensions/extensions.dart';
+import 'package:blindside_challenge/model/video_model.dart';
 import 'package:blindside_challenge/pages/auth_page.dart';
 import 'package:blindside_challenge/theme/colors.dart';
 import 'package:blindside_challenge/widgets/comments_widget.dart';
 import 'package:blindside_challenge/widgets/video_list_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-List<VideoInfo> videos = [
-  VideoInfo(id: '1', title: 'Was ist Blindside?'),
-  VideoInfo(
-    id: '2',
-    title: 'Teaser NIKE in Tenerife',
-  ),
-  VideoInfo(id: '3', title: 'Never Settle, Never Done | Nike'),
-  VideoInfo(id: '4', title: 'No Excuses || Nike || Spec Commercial'),
-];
-
-List<CommentModel> comments = [
-  CommentModel(author: 'David', message: 'Cool stuff!', videoId: '1'),
-  CommentModel(author: 'James', message: 'Love it, keep it up.', videoId: '2'),
-  CommentModel(
-      author: 'Elena',
-      message: 'Nice, i hope it would get even better in the future.',
-      videoId: '3'),
-  CommentModel(
-      author: 'Jia', message: 'These guys are rocking it!', videoId: '3'),
-];
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -38,6 +21,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     _startListenUserAuthStatus();
+    context.read<VideosCubit>().fetchAllVideos();
 
     super.initState();
   }
@@ -62,7 +46,12 @@ class _HomePageState extends State<HomePage> {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: VideoListWidget(information: videos),
+                child: BlocBuilder<VideosCubit, VideosState>(
+                  builder: (context, state) => VideoListWidget(
+                    information:
+                        state.asOrNull<VideosLoadedState>()?.videos ?? [],
+                  ),
+                ),
               ),
             ),
           ],

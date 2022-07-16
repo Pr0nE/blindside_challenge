@@ -1,7 +1,6 @@
 import 'package:blindside_challenge/widgets/comment_item_widget.dart';
 import 'package:flutter/material.dart';
 
-
 class CommentsWidget extends StatefulWidget {
   const CommentsWidget(
       {required this.comments, required this.onAddComment, Key? key})
