@@ -7,8 +7,8 @@ class VideosLoadingState extends VideosState {}
 class VideosLoadedState extends VideosState {
   VideosLoadedState(this.videos);
 
-  final List<VideoModel> videos;
+  final List<VideoInfoModel> videos;
 
-  List<VideoModel> fetchRelatedVideosFor(VideoModel video) =>
+  List<VideoInfoModel> fetchRelatedVideosFor(VideoInfoModel video) =>
       videos.where((element) => element.id != video.id).toList();
 }

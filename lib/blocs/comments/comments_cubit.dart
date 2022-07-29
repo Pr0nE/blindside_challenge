@@ -10,13 +10,16 @@ class CommentsCubit extends Cubit<CommentsState> {
 
   final CommentsRepository commentsRepository;
 
-  fetchCommentsFor(VideoModel video) {
+  fetchCommentsFor(VideoInfoModel video) {
     emit(CommentsLoadingState());
 
     final comments = commentsRepository.fetchCommentsFor(video);
 
-    emit(CommentsLoadedState(
-        comments.where((comment) => comment.videoId == video.id).toList()));
+    emit(
+      CommentsLoadedState(
+        comments.where((comment) => comment.videoId == video.id).toList(),
+      ),
+    );
   }
 
   addComment(CommentModel newComment) {

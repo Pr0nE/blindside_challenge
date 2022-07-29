@@ -1,5 +1,5 @@
-class VideoModel {
-  const VideoModel({
+class VideoInfoModel {
+  const VideoInfoModel({
     required this.id,
     required this.title,
   });

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:blindside_challenge/services/video_manager_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:blindside_challenge/blocs/videos/videos_cubit.dart';
 import 'package:blindside_challenge/blocs/videos/videos_state.dart';
 import 'package:blindside_challenge/extensions/extensions.dart';
-import 'package:blindside_challenge/helpers/controller_initializer_mixin.dart';
 import 'package:blindside_challenge/pages/auth_page.dart';
 import 'package:blindside_challenge/theme/colors.dart';
 import 'package:blindside_challenge/widgets/video_list_widget.dart';
@@ -19,11 +19,13 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with VideoControllerMixin {
+class _HomePageState extends State<HomePage> {
   late final StreamSubscription _userAuthStatusSubscription;
+  late final VideoManagerService _videoManagerService;
 
   @override
   void initState() {
+    _videoManagerService = context.read<VideoManagerService>();
     _userAuthStatusSubscription = _startListenUserAuthStatus();
     context.read<VideosCubit>().fetchAllVideos();
 
@@ -78,7 +80,7 @@ class _HomePageState extends State<HomePage> with VideoControllerMixin {
   @override
   void dispose() {
     _userAuthStatusSubscription.cancel();
-    disposeAllControllers();
+    _videoManagerService.disposeAllControllers();
 
     super.dispose();
   }

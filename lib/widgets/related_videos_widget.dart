@@ -1,11 +1,11 @@
-import 'package:blindside_challenge/helpers/controller_initializer_mixin.dart';
 import 'package:blindside_challenge/helpers/fade_page_route.dart';
+import 'package:blindside_challenge/model/video_controller_model.dart';
 import 'package:blindside_challenge/model/video_model.dart';
 import 'package:blindside_challenge/pages/video_page.dart';
+import 'package:blindside_challenge/services/video_manager_service.dart';
 import 'package:blindside_challenge/widgets/video_item_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RelatedVideosWidget extends StatefulWidget {
   const RelatedVideosWidget({
@@ -14,20 +14,23 @@ class RelatedVideosWidget extends StatefulWidget {
     required this.parentVideo,
   }) : super(key: key);
 
-  final List<VideoModel> videosInfo;
-  final VideoModel parentVideo;
+  final List<VideoInfoModel> videosInfo;
+  final VideoInfoModel parentVideo;
 
   @override
   State<RelatedVideosWidget> createState() => _RelatedVideosWidgetState();
 }
 
-class _RelatedVideosWidgetState extends State<RelatedVideosWidget>
-    with VideoControllerMixin {
-  late final List<Future<VideoPlayerController>> controllers;
+class _RelatedVideosWidgetState extends State<RelatedVideosWidget> {
+  late final Future<List<VideoControllerModel>> controllers;
+  late final VideoManagerService _videoManagerService;
 
   @override
   void initState() {
-    controllers = buildControllers(widget.videosInfo);
+    _videoManagerService = context.read<VideoManagerService>();
+    controllers = _videoManagerService.getVideoList(
+      widget.videosInfo.map((e) => e.id).toList(),
+    );
 
     super.initState();
   }
@@ -46,36 +49,36 @@ class _RelatedVideosWidgetState extends State<RelatedVideosWidget>
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: List.generate(
-                    controllers.length,
-                    (itemIndex) => SizedBox(
-                      width: 200,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: FutureBuilder<VideoPlayerController>(
-                          future: controllers[itemIndex],
-                          builder: (
-                            BuildContext context,
-                            AsyncSnapshot<VideoPlayerController> snapshot,
-                          ) =>
-                              VideoItemWidget(
-                            info: widget.videosInfo[itemIndex],
-                            controllerFuture: controllers[itemIndex],
-                            controller:
-                                getControllerFor(widget.videosInfo[itemIndex]),
-                            isExpanded: false,
-                            showTitle: false,
-                            onTap: (controller) => _onTapRelatedVideo(
-                                controller: controller, itemIndex: itemIndex),
+              child: FutureBuilder<List<VideoControllerModel>>(
+                future: controllers,
+                builder: (context, snapshot) => snapshot.hasData
+                    ? SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: List.generate(
+                            snapshot.data!.length,
+                            (itemIndex) => SizedBox(
+                              width: 200,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: VideoItemWidget(
+                                  info: widget.videosInfo[itemIndex],
+                                  controllerModel: _videoManagerService
+                                      .getReadyControllerFor(
+                                    widget.videosInfo[itemIndex].id,
+                                  )!,
+                                  isExpanded: false,
+                                  showTitle: false,
+                                  onTap: (controller) => _onTapRelatedVideo(
+                                      model: snapshot.data![itemIndex],
+                                      itemIndex: itemIndex),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                  ),
-                ),
+                      )
+                    : CircularProgressIndicator(),
               ),
             ),
           ],
@@ -83,17 +86,17 @@ class _RelatedVideosWidgetState extends State<RelatedVideosWidget>
       );
 
   void _onTapRelatedVideo({
-    required VideoPlayerController controller,
+    required VideoControllerModel model,
     required int itemIndex,
   }) {
-    controller.setVolume(1);
-    muteVideo(widget.parentVideo);
+    model.controller.setVolume(1);
+    context.read<VideoManagerService>().muteVideo(widget.parentVideo.id);
 
     Navigator.push(
       context,
       FadePageRoute(
         (BuildContext context) => VideoPage(
-          controller: controller,
+          controllerModel: model,
           info: widget.videosInfo[itemIndex],
           previousVideoInfo: widget.parentVideo,
         ),

@@ -1,14 +1,14 @@
+import 'package:blindside_challenge/model/video_controller_model.dart';
+import 'package:blindside_challenge/services/video_manager_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:video_player/video_player.dart';
 
 import 'package:blindside_challenge/blocs/comments/comments_cubit.dart';
 import 'package:blindside_challenge/blocs/comments/comments_state.dart';
 import 'package:blindside_challenge/blocs/videos/videos_cubit.dart';
 import 'package:blindside_challenge/blocs/videos/videos_state.dart';
 import 'package:blindside_challenge/extensions/extensions.dart';
-import 'package:blindside_challenge/helpers/controller_initializer_mixin.dart';
 import 'package:blindside_challenge/model/video_model.dart';
 import 'package:blindside_challenge/repositories/comments_repository.dart';
 import 'package:blindside_challenge/theme/colors.dart';
@@ -19,21 +19,21 @@ import 'package:blindside_challenge/widgets/video_item_widget.dart';
 class VideoPage extends StatefulWidget {
   const VideoPage({
     Key? key,
-    required this.controller,
+    required this.controllerModel,
     required this.info,
     this.previousVideoInfo,
   }) : super(key: key);
 
-  final VideoModel info;
-  final VideoModel? previousVideoInfo;
+  final VideoInfoModel info;
+  final VideoInfoModel? previousVideoInfo;
 
-  final VideoPlayerController controller;
+  final VideoControllerModel controllerModel;
 
   @override
   State<VideoPage> createState() => _VideoPageState();
 }
 
-class _VideoPageState extends State<VideoPage> with VideoControllerMixin {
+class _VideoPageState extends State<VideoPage> {
   late final CommentsCubit _commentsCubit;
 
   @override
@@ -59,8 +59,7 @@ class _VideoPageState extends State<VideoPage> with VideoControllerMixin {
               children: [
                 VideoItemWidget(
                   info: widget.info,
-                  controllerFuture: Future.value(widget.controller),
-                  controller: widget.controller,
+                  controllerModel: widget.controllerModel,
                   isExpanded: true,
                   onTap: _onTapVideo,
                 ),
@@ -107,20 +106,24 @@ class _VideoPageState extends State<VideoPage> with VideoControllerMixin {
     );
   }
 
-  void _onTapVideo(VideoPlayerController controller) {
-    if (controller.value.isPlaying) {
-      controller.pause();
+  void _onTapVideo(VideoControllerModel model) {
+    if (model.controller.value.isPlaying) {
+      model.controller.pause();
     } else {
-      controller.play();
+      model.controller.play();
     }
   }
 
   Future<bool> _onWillPop() {
-    widget.controller.play();
-    widget.controller.setVolume(0);
+    widget.controllerModel.controller.play();
+    widget.controllerModel.controller.setVolume(0);
 
     if (widget.previousVideoInfo != null) {
-      getControllerFor(widget.previousVideoInfo!)?.setVolume(1);
+      context
+          .read<VideoManagerService>()
+          .getReadyControllerFor(widget.previousVideoInfo!.id)
+          ?.controller
+          .setVolume(1);
     }
 
     return Future.value(true);

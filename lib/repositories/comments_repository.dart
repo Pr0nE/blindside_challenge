@@ -14,6 +14,6 @@ class CommentsRepository {
         author: 'Jia', message: 'These guys are rocking it!', videoId: '3'),
   ];
 
-  List<CommentModel> fetchCommentsFor(VideoModel video) =>
+  List<CommentModel> fetchCommentsFor(VideoInfoModel video) =>
       _comments.where((element) => element.id != video.id).toList();
 }
