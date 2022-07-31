@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 class CommentsWidget extends StatefulWidget {
   const CommentsWidget({
     required this.comments,
-    required this.onAddComment,
+    this.onAddComment,
     Key? key,
   }) : super(key: key);
 
   final List<CommentModel> comments;
-  final Function(String) onAddComment;
+  final Function(String)? onAddComment;
 
   @override
   State<CommentsWidget> createState() => _CommentsWidgetState();
@@ -87,7 +87,7 @@ class _CommentsWidgetState extends State<CommentsWidget> {
               decoration:
                   const InputDecoration(hintText: 'Write you comment here...'),
               onSubmitted: (text) {
-                widget.onAddComment(text);
+                widget.onAddComment?.call(text);
                 _textEditingController.clear();
               },
             ),

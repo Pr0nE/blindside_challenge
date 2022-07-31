@@ -9,7 +9,6 @@ class VideoInitializerServiceImpl implements VideoInitializerService {
   @override
   Future<VideoControllerModel> initializeVideo(String id) async {
     String url = _getVideoUrlFor(id);
-    // TODO(mohammad): find a way to mock `VideoPlayerController` so we can write test for this service.
     final controller = VideoPlayerController.asset(
       url,
       videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),

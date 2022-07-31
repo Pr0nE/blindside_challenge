@@ -3,6 +3,7 @@ import 'package:blindside_challenge/services/video_initializer_service.dart';
 import 'package:collection/collection.dart';
 
 abstract class VideoManagerService {
+  Iterable<VideoControllerModel> get initializedVideos;
   Future<VideoControllerModel> getVideo(String id);
   Future<List<VideoControllerModel>> getVideoList(List<String> ids);
   VideoControllerModel? getReadyControllerFor(String videoId);
@@ -16,6 +17,9 @@ class VideoManagerServiceImpl implements VideoManagerService {
   final VideoInitializerService videoInitializerService;
 
   final Map<String, VideoControllerModel> _controllers = {};
+
+  @override
+  Iterable<VideoControllerModel> get initializedVideos => _controllers.values;
 
   @override
   Future<VideoControllerModel> getVideo(String id) async {
@@ -34,14 +38,13 @@ class VideoManagerServiceImpl implements VideoManagerService {
 
   @override
   Future<List<VideoControllerModel>> getVideoList(List<String> ids) =>
-      Future.wait(
-        ids.map((id) => getVideo(id)),
-      );
+      Future.wait(ids.map((id) => getVideo(id)));
 
   @override
-  VideoControllerModel? getReadyControllerFor(String videoId) => _controllers.entries
-      .firstWhereOrNull((element) => element.key == videoId)
-      ?.value;
+  VideoControllerModel? getReadyControllerFor(String videoId) =>
+      _controllers.entries
+          .firstWhereOrNull((element) => element.key == videoId)
+          ?.value;
 
   @override
   Future<void> muteVideo(String videoId) async => _controllers.entries
@@ -56,7 +59,6 @@ class VideoManagerServiceImpl implements VideoManagerService {
           (element) => element.controller.dispose(),
         );
 
-    _controllers.clear();
     _controllers.clear();
   }
 }

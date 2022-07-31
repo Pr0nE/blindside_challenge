@@ -102,6 +102,5 @@ class _RelatedVideosWidgetState extends State<RelatedVideosWidget> {
         ),
       ),
     );
-    return;
   }
 }

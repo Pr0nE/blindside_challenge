@@ -12,13 +12,15 @@ class CommentItemWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '${comment.author}: ',
+              comment.author,
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
+            const SizedBox(width: 4),
             Flexible(
               child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(comment.message)),
+                alignment: Alignment.centerLeft,
+                child: Text(comment.message),
+              ),
             ),
           ],
         ),
