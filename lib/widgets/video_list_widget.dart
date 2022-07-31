@@ -52,7 +52,13 @@ class _VideoListWidgetState extends State<VideoListWidget> {
                 separatorBuilder: (BuildContext context, int itemIndex) =>
                     const SizedBox(height: 50),
               )
-            : CircularProgressIndicator(),
+            : const Center(
+                child: SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: CircularProgressIndicator(),
+                ),
+              ),
       );
 
   void _onTapVideo({

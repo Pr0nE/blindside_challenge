@@ -4,6 +4,7 @@ import 'package:collection/collection.dart';
 
 abstract class VideoManagerService {
   Iterable<VideoControllerModel> get initializedVideos;
+  Iterable<VideoControllerModel> getRelatedVideoFor(String id);
   Future<VideoControllerModel> getVideo(String id);
   Future<List<VideoControllerModel>> getVideoList(List<String> ids);
   VideoControllerModel? getReadyControllerFor(String videoId);
@@ -60,5 +61,10 @@ class VideoManagerServiceImpl implements VideoManagerService {
         );
 
     _controllers.clear();
+  }
+
+  @override
+  Iterable<VideoControllerModel> getRelatedVideoFor(String id) {
+    return _controllers.values.where((controller) => controller.videoId != id);
   }
 }

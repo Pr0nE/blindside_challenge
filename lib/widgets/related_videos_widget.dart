@@ -22,15 +22,14 @@ class RelatedVideosWidget extends StatefulWidget {
 }
 
 class _RelatedVideosWidgetState extends State<RelatedVideosWidget> {
-  late final Future<List<VideoControllerModel>> controllers;
+  late final List<VideoControllerModel> controllers;
   late final VideoManagerService _videoManagerService;
 
   @override
   void initState() {
     _videoManagerService = context.read<VideoManagerService>();
-    controllers = _videoManagerService.getVideoList(
-      widget.videosInfo.map((e) => e.id).toList(),
-    );
+    controllers =
+        _videoManagerService.getRelatedVideoFor(widget.parentVideo.id).toList();
 
     super.initState();
   }
@@ -48,39 +47,33 @@ class _RelatedVideosWidgetState extends State<RelatedVideosWidget> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: FutureBuilder<List<VideoControllerModel>>(
-                future: controllers,
-                builder: (context, snapshot) => snapshot.hasData
-                    ? SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: List.generate(
-                            snapshot.data!.length,
-                            (itemIndex) => SizedBox(
-                              width: 200,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: VideoItemWidget(
-                                  info: widget.videosInfo[itemIndex],
-                                  controllerModel: _videoManagerService
-                                      .getReadyControllerFor(
-                                    widget.videosInfo[itemIndex].id,
-                                  )!,
-                                  isExpanded: false,
-                                  showTitle: false,
-                                  onTap: (controller) => _onTapRelatedVideo(
-                                      model: snapshot.data![itemIndex],
-                                      itemIndex: itemIndex),
-                                ),
-                              ),
-                            ),
+                padding: const EdgeInsets.all(8.0),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: List.generate(
+                      controllers.length,
+                      (itemIndex) => SizedBox(
+                        width: 200,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: VideoItemWidget(
+                            info: widget.videosInfo[itemIndex],
+                            controllerModel:
+                                _videoManagerService.getReadyControllerFor(
+                              widget.videosInfo[itemIndex].id,
+                            )!,
+                            isExpanded: false,
+                            showTitle: false,
+                            onTap: (controller) => _onTapRelatedVideo(
+                                model: controllers[itemIndex],
+                                itemIndex: itemIndex),
                           ),
                         ),
-                      )
-                    : CircularProgressIndicator(),
-              ),
-            ),
+                      ),
+                    ),
+                  ),
+                )),
           ],
         ),
       );
