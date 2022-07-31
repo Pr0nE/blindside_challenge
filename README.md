@@ -1,16 +1,32 @@
-# blindside_challenge
+# Video platform project
 
-A new Flutter project.
+## **About the project**
+    Its a simple video platform which shows few simple videos from local source.
+    Main parts are authentication, video preview and comment section.
 
-## Getting Started
+## **Purpose of the project**
+    This project was actually a test/challenge project which a company requested me to do for their recruitment process.
+    I decided to make it public as it does not contain any private data or code.
+    I may improve it regularly.
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+## **Preview**
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
+## **Features status**
+
+
+Feature | Status 
+--- | ---
+Firebase auth | *Done*
+Widget tests | *Done*
+Unit tests |  *Done*
+Code doc | *In progress*
+Integration test | *Backlog*
+Shimmer effect | *Backlog*
+Use remote source | *Backlog*
+Save comments | *Backlog*
+Migrate to clean architecture | *Backlog*
+
