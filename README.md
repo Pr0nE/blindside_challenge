@@ -12,8 +12,7 @@
 
 ## **Preview**
 
-
-
+https://user-images.githubusercontent.com/25032492/182020467-5ded18ea-3a79-4197-ac4c-a4eef67d0e51.mov
 
 ## **Features status**
 
