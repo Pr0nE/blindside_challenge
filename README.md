@@ -21,8 +21,9 @@ Feature | Status
 Firebase auth | *Done*
 Widget tests | *Done*
 Unit tests |  *Done*
-Code doc | *In progress*
-Integration test | *Backlog*
+Code doc | *Done*
+Github actions | *Done*
+Integration test | *In progress*
 Shimmer effect | *Backlog*
 Use remote source | *Backlog*
 Save comments | *Backlog*
