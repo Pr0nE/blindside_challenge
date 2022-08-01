@@ -12,6 +12,7 @@ import 'package:blindside_challenge/pages/auth_page.dart';
 import 'package:blindside_challenge/theme/colors.dart';
 import 'package:blindside_challenge/widgets/video_list_widget.dart';
 
+/// Landing page of an authenticated user.
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 

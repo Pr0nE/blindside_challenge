@@ -24,11 +24,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MultiRepositoryProvider(
         providers: [
-          RepositoryProvider(create: (c) => VideosRepository()),
-          RepositoryProvider(create: (c) => CommentsRepository()),
+          RepositoryProvider(create: (c) => VideosRepositoryImpl()),
+          RepositoryProvider(create: (c) => CommentsRepositoryImpl()),
           RepositoryProvider<VideoManagerService>(
-            create: (c) =>
-                VideoManagerServiceImpl(VideoInitializerServiceImpl()),
+            create: (c) => VideoManagerServiceImpl(
+              VideoInitializerServiceImpl(),
+            ),
           ),
         ],
         child: MultiBlocProvider(

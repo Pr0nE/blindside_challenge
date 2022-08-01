@@ -16,6 +16,9 @@ import 'package:blindside_challenge/widgets/comments_widget.dart';
 import 'package:blindside_challenge/widgets/related_videos_widget.dart';
 import 'package:blindside_challenge/widgets/video_item_widget.dart';
 
+/// Shows details of a video.
+///
+/// You may need to pass [previousVideoInfo], if this page get pushed by another instance of a [VideoPage].
 class VideoPage extends StatefulWidget {
   const VideoPage({
     Key? key,
@@ -24,9 +27,15 @@ class VideoPage extends StatefulWidget {
     this.previousVideoInfo,
   }) : super(key: key);
 
+  /// Information of the video which this page going to show.
   final VideoInfoModel info;
+
+  /// Information of previous [VideoPage]'s video, is there is any.
   final VideoInfoModel? previousVideoInfo;
 
+  /// Controller of the video.
+  ///
+  /// We're sure that this controller is initialized as all instances of [VideoControllerModel] has an initialized controller.
   final VideoControllerModel controllerModel;
 
   @override
@@ -35,11 +44,13 @@ class VideoPage extends StatefulWidget {
 
 class _VideoPageState extends State<VideoPage> {
   late final CommentsCubit _commentsCubit;
+  late final VideosCubit _videosCubit;
 
   @override
   void initState() {
-    _commentsCubit = CommentsCubit(commentsRepository: CommentsRepository());
-    _commentsCubit.fetchCommentsFor(widget.info);
+    _commentsCubit = CommentsCubit(commentsRepository: context.read<CommentsRepository>());
+    _videosCubit = context.read<VideosCubit>();
+    _commentsCubit.fetchCommentsFor(widget.info.id);
 
     super.initState();
   }
@@ -69,10 +80,8 @@ class _VideoPageState extends State<VideoPage> {
                     child: Column(children: [
                       BlocBuilder<VideosCubit, VideosState>(
                         builder: (context, state) => RelatedVideosWidget(
-                          videosInfo: state
-                                  .asOrNull<VideosLoadedState>()
-                                  ?.fetchRelatedVideosFor(widget.info) ??
-                              [],
+                          videosInfo:
+                              _videosCubit.getRelatedVideosFor(widget.info),
                           parentVideo: widget.info,
                         ),
                       ),

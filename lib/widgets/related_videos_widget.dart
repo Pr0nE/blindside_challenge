@@ -7,6 +7,7 @@ import 'package:blindside_challenge/widgets/video_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+/// Shows related videos of a [parentVideo].
 class RelatedVideosWidget extends StatefulWidget {
   const RelatedVideosWidget({
     Key? key,

@@ -7,6 +7,7 @@ import 'package:blindside_challenge/pages/video_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+/// Displays list of videos by passing their [information].
 class VideoListWidget extends StatefulWidget {
   const VideoListWidget({
     Key? key,

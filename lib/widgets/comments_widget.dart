@@ -2,6 +2,9 @@ import 'package:blindside_challenge/theme/colors.dart';
 import 'package:blindside_challenge/widgets/comment_item_widget.dart';
 import 'package:flutter/material.dart';
 
+/// Displays list of comments.
+/// 
+/// This widget also has an ability to toggle visibility of the comments.
 class CommentsWidget extends StatefulWidget {
   const CommentsWidget({
     required this.comments,

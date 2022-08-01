@@ -29,7 +29,7 @@ void main() {
   blocTest(
     'Should emit right states after calling fetchComments',
     build: () => CommentsCubit(commentsRepository: commentsRepository),
-    act: (CommentsCubit cubit) => cubit.fetchCommentsFor(fakeInfo),
+    act: (CommentsCubit cubit) => cubit.fetchCommentsFor(fakeInfo.id),
     expect: () => [
       isA<CommentsLoadingState>(),
       isA<CommentsLoadedState>(),

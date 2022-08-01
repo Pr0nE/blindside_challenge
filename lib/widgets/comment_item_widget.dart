@@ -1,6 +1,7 @@
 import 'package:blindside_challenge/widgets/comments_widget.dart';
 import 'package:flutter/material.dart';
 
+/// Displays information of a single [comment].
 class CommentItemWidget extends StatelessWidget {
   final CommentModel comment;
   const CommentItemWidget({Key? key, required this.comment}) : super(key: key);

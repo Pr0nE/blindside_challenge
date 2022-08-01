@@ -1,6 +1,10 @@
 import 'package:blindside_challenge/model/video_model.dart';
 
-class VideosRepository {
+abstract class VideosRepository {
+  List<VideoInfoModel> fetchVideos();
+}
+
+class VideosRepositoryImpl implements VideosRepository {
   final List<VideoInfoModel> _videos = const [
     VideoInfoModel(id: '1', title: 'Was ist Blindside?'),
     VideoInfoModel(
@@ -11,5 +15,6 @@ class VideosRepository {
     VideoInfoModel(id: '4', title: 'No Excuses || Nike || Spec Commercial'),
   ];
 
+  @override
   List<VideoInfoModel> fetchVideos() => _videos;
 }

@@ -2,16 +2,35 @@ import 'package:blindside_challenge/model/video_controller_model.dart';
 import 'package:blindside_challenge/services/video_initializer_service.dart';
 import 'package:collection/collection.dart';
 
+/// Responsible for managing initialized videos.
+///
+/// It also decides when we should initialize a video, by using a dependency service.
 abstract class VideoManagerService {
+  /// Gets all initialized videos.
   Iterable<VideoControllerModel> get initializedVideos;
+
+  /// Gets related videos of a particular video.
   Iterable<VideoControllerModel> getRelatedVideoFor(String id);
+
+  /// Gets an initialized version of the given video by its [id].
   Future<VideoControllerModel> getVideo(String id);
+
+  /// Gets initialized versions of the given videos by their [ids].
   Future<List<VideoControllerModel>> getVideoList(List<String> ids);
+
+  /// Gets an initialized version of the given video, only if its already has been initialized.
+  ///
+  /// Otherwise, it returns `null`.
   VideoControllerModel? getReadyControllerFor(String videoId);
+
+  /// Mutes audio of the provided [videoId].
   Future<void> muteVideo(String videoId);
+
+  /// Disposes all initialized controllers.
   Future<void> disposeAllControllers();
 }
 
+/// A concrete class of [VideoManagerService] which uses a [VideoInitializerService] dependency to initialize videos if needed.
 class VideoManagerServiceImpl implements VideoManagerService {
   VideoManagerServiceImpl(this.videoInitializerService);
 

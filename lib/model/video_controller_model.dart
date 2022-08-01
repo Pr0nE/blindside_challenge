@@ -1,5 +1,6 @@
 import 'package:video_player/video_player.dart';
 
+/// Holds information of a initialized video.
 class VideoControllerModel {
   final String videoId;
   final VideoPlayerController controller;

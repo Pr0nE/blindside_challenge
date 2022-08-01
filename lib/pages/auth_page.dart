@@ -6,11 +6,15 @@ import 'package:blindside_challenge/pages/home_page.dart';
 import 'package:blindside_challenge/theme/colors.dart';
 import 'package:blindside_challenge/extensions/context_extensions.dart';
 
+/// Various types of authentication in app.
 enum AuthType {
   login,
   register,
 }
 
+/// Authentication page.
+/// 
+/// Contains both `registering` and `login` functionalities.
 class AuthPage extends StatefulWidget {
   const AuthPage({Key? key}) : super(key: key);
 

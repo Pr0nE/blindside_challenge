@@ -3,6 +3,9 @@ import 'package:blindside_challenge/model/video_model.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
+/// Responsible for displaying a single video.
+///
+/// This widget has also an inner video payer.
 class VideoItemWidget extends StatefulWidget {
   const VideoItemWidget({
     Key? key,
